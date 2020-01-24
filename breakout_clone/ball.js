@@ -1,34 +1,34 @@
-var Ball = function() {
-  var image = imageFromPath("./images/ball.png");
-  var o = {
-    image: image,
-    x: 120,
-    y: 200,
-    speedX: 5,
-    speedy: 5,
-    fired: false,
-    fire: function() {
-      this.fired = true;
-    }
+var Ball = function(game) {
+  var o = game.imageByName("ball");
+  o.x = 100;
+  o.y = 200;
+  o.speedX = 5;
+  o.speedY = 5;
+  o.fired = false;
+
+  o.fire = function() {
+    o.fired = true;
   };
+
   o.move = function() {
     if (o.fired) {
+      log("ball移动", o);
       if (o.x <= 0 || o.x + 17 > 400) {
         o.speedX = -o.speedX;
       }
 
       if (o.y <= 0 || o.y >= 300) {
-        o.speedy = -o.speedy;
+        o.speedY = -o.speedY;
       }
 
       o.x += o.speedX;
-      o.y += o.speedy;
+      o.y += o.speedY;
     }
+  };
 
-    //反弹
-    o.bounce = function() {
-      o.speedy = -o.speedy;
-    };
+  //反弹
+  o.bounce = function() {
+    o.speedY = -o.speedY;
   };
   return o;
 };

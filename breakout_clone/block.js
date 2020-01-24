@@ -1,23 +1,25 @@
-var Block = function(position) {
+var Block = function(game, position) {
   var p = position;
-  var image = imageFromPath("./images/block001.png");
+  // game.imageByName(""./images/block001.png"
+
+  var img = game.imageByName("block");
 
   if (p.lifes == undefined) {
     p.lifes = 1;
   }
-  log(p.lifes);
   var o = {
-    image: image,
     x: p.x,
     y: p.y,
-    width: 50,
-    height: 20,
     alive: true,
     lifes: p.lifes
   };
 
+  o.image = img.image
+  o.w = img.w
+  o.h = img.h
+
   o.kill = function() {
-    o.lifes = o.lifes - 1
+    o.lifes = o.lifes - 1;
     if (o.lifes < 1) {
       o.alive = false;
     }
@@ -32,7 +34,6 @@ var Block = function(position) {
         ball.image.height / 2 + o.image.height / 2
     ) {
       log("球和砖块发生碰撞");
-    //   log(o);
       return true;
     }
     return false;

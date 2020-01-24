@@ -1,7 +1,8 @@
-var Game = function(fps) {
+var Game = function(fps, images, runCallback) {
   var g = {
     actions: {},
-    keydowns: {}
+    keydowns: {},
+    images: {}
   };
   var canvas = document.querySelector("#id-canvas");
   var context = canvas.getContext("2d");
@@ -21,9 +22,10 @@ var Game = function(fps) {
   };
 
   g.drawImage = function(o) {
+    // log("draw", o.image)
     g.context.drawImage(o.image, o.x, o.y);
   };
-  window.fps = fps
+  window.fps = fps;
   runloop = function() {
     var actions = Object.keys(g.actions);
     for (var i = 0; i < actions.length; i++) {
@@ -41,8 +43,42 @@ var Game = function(fps) {
     }, 1000 / window.fps);
   };
 
-  setTimeout(() => {
-    runloop();
-  }, 1000 / window.fps);
+  var loads = [];
+
+  var names = Object.keys(images);
+
+  for (var i = 0; i < names.length; i++) {
+    let name = names[i];
+    var path = images[name];
+    let img = new Image();
+    img.src = path;
+    
+    img.onload = function() {
+      loads.push(1);
+      g.images[name] = img;
+      if (loads.length == names.length) {
+        log("aaa", g.images)
+        g.run();
+      }
+    };
+  }
+
+  g.imageByName = function(name) {
+    var img = g.images[name];
+    var image = {
+      w: img.width,
+      h: img.height,
+      image: img
+    };
+    return image;
+  };
+
+  g.run = function() {
+    runCallback(g)
+    setTimeout(() => {
+      runloop();
+    }, 1000 / window.fps);
+  };
+
   return g;
 };
