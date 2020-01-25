@@ -12,7 +12,6 @@ var Ball = function(game) {
 
   o.move = function() {
     if (o.fired) {
-      log("ball移动", o);
       if (o.x <= 0 || o.x + 17 > 400) {
         o.speedX = -o.speedX;
       }

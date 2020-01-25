@@ -1,5 +1,6 @@
 var Game = function(fps, images, runCallback) {
   var g = {
+    scene: null,
     actions: {},
     keydowns: {},
     images: {}
@@ -24,6 +25,14 @@ var Game = function(fps, images, runCallback) {
   g.drawImage = function(o) {
     // log("draw", o.image)
     g.context.drawImage(o.image, o.x, o.y);
+  };
+
+  g.update = function() {
+    g.scene.update();
+  };
+
+  g.draw = function() {
+    g.scene.draw();
   };
   window.fps = fps;
   runloop = function() {
@@ -52,12 +61,12 @@ var Game = function(fps, images, runCallback) {
     var path = images[name];
     let img = new Image();
     img.src = path;
-    
+
     img.onload = function() {
       loads.push(1);
       g.images[name] = img;
       if (loads.length == names.length) {
-        log("aaa", g.images)
+        log("aaa", g.images);
         g.run();
       }
     };
@@ -74,10 +83,18 @@ var Game = function(fps, images, runCallback) {
   };
 
   g.run = function() {
-    runCallback(g)
+    runCallback(g);
+  };
+
+  g.runWithScene = function(scene) {
+    g.scene = scene;
     setTimeout(() => {
       runloop();
     }, 1000 / window.fps);
+  };
+
+  g.replaceScene = function(endScene) {
+    g.scene = endScene;
   };
 
   return g;
