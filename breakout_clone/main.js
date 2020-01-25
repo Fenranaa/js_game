@@ -54,6 +54,31 @@ var main = function() {
       ball.fire();
     });
 
+    var enableDragBall = false;
+    game.canvas.addEventListener("mousedown", function(event) {
+      // log("movedown")
+
+      var x = event.offsetX;
+      var y = event.offsetY;
+      if (ball.hasPosition(x, y)) {
+        log("move");
+        enableDragBall = true;
+      }
+    });
+
+    game.canvas.addEventListener("mousemove", function(event) {
+      var x = event.offsetX;
+      var y = event.offsetY;
+      if (enableDragBall) {
+        ball.x = x;
+        ball.y = y;
+      }
+    });
+    game.canvas.addEventListener("mouseup", function(event) {
+      // log("moveup")
+      enableDragBall = false;
+    });
+
     game.update = function() {
       if (pause) {
         return;

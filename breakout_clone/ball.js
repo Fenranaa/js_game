@@ -25,7 +25,11 @@ var Ball = function(game) {
       o.y += o.speedY;
     }
   };
-
+  o.hasPosition = function(x, y) {
+    var xIn = x >= o.x && x <= o.x + o.w;
+    var yIn = y >= o.y && y <= o.y + o.h;
+    return xIn && yIn;
+  };
   //反弹
   o.bounce = function() {
     o.speedY = -o.speedY;
