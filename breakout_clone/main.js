@@ -36,7 +36,7 @@ var main = function() {
     paddle: "./images/paddle.png"
   };
   var game = Game(60, images, function(g) {
-    var scene = Scene(g)
+    var scene = new SceneStart(g)
     g.runWithScene(scene)
 
   });
