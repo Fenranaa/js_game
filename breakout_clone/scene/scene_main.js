@@ -69,12 +69,10 @@ class SceneMain extends Scene {
       }
     });
     this.game.canvas.addEventListener("mouseup", event => {
-      // log("moveup")
       enableDragBall = false;
     });
 
     this.game.registerAction("a", () => {
-      log(this.paddle);
       this.paddle.moveLeft();
     });
 
