@@ -19,6 +19,9 @@
         margin: 20px 300px;
         border: 1px solid red;
       }
+      .aa {
+        margin: 5px 300px;
+      }
     </style>
     <title>飞机大战</title>
   </head>
@@ -26,6 +29,81 @@
     <canvas id="id-canvas" width="480" height="700"> </canvas>
     <br />
     <input type="range" value="1" id="id-input-speed" />
+    <div class="aa">
+      <label>
+        <input
+          type="range"
+          class="auto-slider"
+          value=""
+          max="20"
+          min="1"
+          data-value="config.player_speed"
+        />
+        玩家飞机速度: <span class="speed"></span>
+      </label>
+    </div>
+    <div class="aa">
+      <label>
+        <input
+          type="range"
+          class="auto-slider"
+          value=""
+          max="20"
+          min="1"
+          data-value="config.player_speed"
+        />
+        敌机速度: <span class="speed"></span>
+      </label>
+    </div>
+    <div class="aa">
+      <label>
+        <input
+          type="range"
+          class="auto-slider"
+          value=""
+          max="20"
+          min="1"
+          data-value="config.bg_speed"
+        />
+        背景速度: <span class="speed"></span>
+      </label>
+    </div>
+    <div class="aa">
+      <label>
+        <input
+          type="range"
+          class="auto-slider"
+          value=""
+          max="20"
+          min="1"
+          data-value="config.bullet_speed"
+        />
+        子弹速度: <span class="speed"></span>
+      </label>
+    </div>
   </body>
   <script src="./main.js"></script>
+  <script>
+    var es = sel => document.querySelectorAll(sel);
+    var bindAll = function(sel, eventName, callback) {
+      log(111);
+      var l = es(sel);
+      for (var i = 0; i < l.length; i++) {
+        var input = l[i];
+        input.addEventListener(eventName, function(event) {
+          callback(event);
+        });
+      }
+    };
+
+    bindAll(".auto-slider", "input", function(event) {
+      var target = event.target;
+      var bindVar = target.dataset.value;
+      var v = target.value;
+      eval(bindVar + "=" + v);
+      var label = target.closest("label").querySelector(".speed");
+      log(v);
+      label.innerText = v + "";
+    });
+  </script>
 </html>

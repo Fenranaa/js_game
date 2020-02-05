@@ -1,25 +1,13 @@
 class SceneMain extends Scene {
   constructor(game) {
     super(game);
-    this.bg = new GameImage(game, "sky")
-    this.player = new Player(game, "player")
-    this.player.x = 100
-    this.player.y = 500
-    this.init()
-  }
-
-  // draw() {
-  //   this.game.drawImage(this.bg);
-  //   this.game.drawImage(this.player)
-  // }
-
-  update() {
-    // if (window.pause) {
-    //   return;
-    // }
-
-    
-   
+    this.numberOfEnemy = 10;
+    this.bg = new Background(game, "sky");
+    this.bg2 = new Background(game, "sky");
+    this.player = new Player(game, "player");
+    this.player.x = 100;
+    this.player.y = 500;
+    this.init();
   }
 
   init() {
@@ -60,14 +48,26 @@ class SceneMain extends Scene {
       this.player.moveBottom();
     });
 
+    this.game.registerAction("f", () => {
+      this.player.fire();
+    });
+    this.addElements(this.bg);
+    this.bg2.y = -this.bg2.h 
+    this.addElements(this.bg2);
+    this.addElements(this.player);
 
-    this.addElements(this.bg)
-    this.addElements(this.player)
-
-
-
-    // this.game.registerAction("f", () => {
-    //   this.ball.fire();
-    // });
+    this.addEnemys();
+  }
+  addEnemys() {
+    var es = [];
+    for (var i = 0;i < this.numberOfEnemy; i++) {
+      var e = new Enemy(this.game)
+      es.push(e)
+      this.addElements(e)
+    }
+    this.enemys = es
+  }
+  update() {
+    super.update()
   }
 }
